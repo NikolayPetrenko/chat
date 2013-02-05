@@ -39,39 +39,23 @@ app.configure "production", ->
 
 # Routes
 Post = mongoose.model("Post")
-User = mongoose.model("User")
-
 
 app.get "/", (req, res) ->
   Post.find().sort(created_at: -1).execFind (err, posts) ->
     throw err  if err
     res.render "index",
-      title: "Articles"
+      title: "Realtime chat"
       posts: posts
-
-app.get "/users", (req, res) ->
-  User.find().sort(name: -1).execFind (err, users) ->
-    throw err  if err
-    res.render "users",
-      title: "Users"
-      users: users
 
 #New post
 app.get "/posts/new", (req, res) ->
   res.render "posts/new",
     title: "New article"
 
-#New user
-app.get "/reg", (req, res) ->
-  res.render "reg",
-    title: "Registration"
-    errors: ""
-
-
 #POST
 app.post "/posts", (req, res) ->
   post = new Post()
-  post.title = req.body.title
+  post.user = req.body.user if req.body.user
   post.body = req.body.body
   post.save (err) ->
     if err
@@ -79,21 +63,6 @@ app.post "/posts", (req, res) ->
         title: "error"
     else
       io.sockets.emit "new_post", post
-      res.redirect "/"
-
-app.post "/reg", (req, res) ->
-  user = new User()
-  user.name = req.body.name
-  user.email = req.body.email
-  user.password = req.body.password
-  user.save (err) ->
-    console.log err
-    if err
-      res.render "reg",
-        title: "Registration"
-        errors: err
-    else
-      #			io.sockets.emit('new_user', user);
       res.redirect "/"
 
 app.listen 3000, ->

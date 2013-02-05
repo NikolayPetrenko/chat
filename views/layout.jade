@@ -3,8 +3,17 @@ html(lang="en")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     script(type='text/javascript', src='/js/jquery.js')
+    script(type='text/javascript', src='/js/bootstrap.min.js')
+    script(type='text/javascript', src='/js/jquery.form.js')
+    script(type='text/javascript', src='/js/underscore-min.js')
+    script(type='text/javascript', src='/js/underscore.strings.js')
     script(type='text/javascript', src='/socket.io/socket.io.js')
   body
-    != body
+    div.container
+      != body
+    div.footer
+      &copy; 2012-2013 Apps Bakery. All rights reserved.
     block javascripts
+    script(type='text/javascript', src='/js/index.js')

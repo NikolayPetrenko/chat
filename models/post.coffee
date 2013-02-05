@@ -1,12 +1,11 @@
 PostSchema = new Schema(
-  title:
+  user:
     type: String
-    default: ""
+    default: "Anonym"
     trim: true
 
   body:
     type: String
-    default: ""
     trim: true
 
   created_at:
