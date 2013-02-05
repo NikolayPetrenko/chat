@@ -1,0 +1,12 @@
+h1= title
+
+- if(errors.length)
+    p
+form(method="post", action="/reg")
+  p Name
+  input(name="name", type="text")
+  p Email
+  input(name="email", type="text")
+  p Password
+  input(name="password", type="password")
+  input(type="submit", value="SignUp")

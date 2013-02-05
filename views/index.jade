@@ -1,0 +1,22 @@
+h1= title
+
+a(href="/reg", title="Sign Up") Sign Up
+p
+a(href="/posts/new", title="Add article") Add article
+div#posts
+  - if(posts.length)
+    each item in posts
+      h2= item.title
+      p= item.body
+  - else
+    p No new articles
+
+append javascripts
+  script(type='text/javascript')
+      $(document).ready(function(){
+        var socket = io.connect('http://localhost');
+        socket.on('new_post', function(data){
+        //console.log(data);
+          $("#posts").prepend('<h2>' + data.title + '</h2><p>' + data.body + '</p>');
+        });
+      });
